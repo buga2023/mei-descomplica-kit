@@ -7,7 +7,12 @@ const corsHeaders = {
 
 interface PaymentRequest {
   plan: 'pro' | 'business';
-  customerEmail?: string;
+  customer?: {
+    name: string;
+    cellphone: string;
+    email: string;
+    taxId: string;
+  };
 }
 
 serve(async (req) => {
@@ -17,9 +22,9 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Creating payment for Abacate Pay...');
+    console.log('Creating PIX QR Code for Abacate Pay...');
     
-    const { plan, customerEmail } = await req.json() as PaymentRequest;
+    const { plan, customer } = await req.json() as PaymentRequest;
     
     // Define os valores de acordo com o plano
     const planDetails = {
@@ -48,35 +53,25 @@ serve(async (req) => {
       throw new Error('ABACATE_PAY_API_KEY não configurada');
     }
 
-    const billingData = {
-      frequency: 'ONE_TIME',
-      methods: ['PIX', 'CARD'],
+    const pixData = {
       amount: selectedPlan.amount,
-      ...(customerEmail && {
-        customer: {
-          email: customerEmail
-        }
-      }),
-      products: [
-        {
-          externalId: `mei-${plan}`,
-          name: selectedPlan.description,
-          description: selectedPlan.description,
-          quantity: 1,
-          price: selectedPlan.amount
-        }
-      ]
+      expiresIn: 3600, // 1 hora
+      description: selectedPlan.description,
+      ...(customer && { customer }),
+      metadata: {
+        externalId: `mei-${plan}-${Date.now()}`
+      }
     };
 
-    console.log('Calling Abacate Pay API...');
+    console.log('Calling Abacate Pay PIX API...');
     
-    const response = await fetch('https://api.abacatepay.com/v1/billing/create', {
+    const response = await fetch('https://api.abacatepay.com/v1/pixQrCode/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${abacatePayApiKey}`
       },
-      body: JSON.stringify(billingData)
+      body: JSON.stringify(pixData)
     });
 
     const responseData = await response.json();
@@ -88,12 +83,13 @@ serve(async (req) => {
       throw new Error(responseData.error || 'Erro ao criar cobrança');
     }
 
-    // Retornar a URL de pagamento
+    // Retornar os dados do QR Code PIX
     return new Response(
       JSON.stringify({
         success: true,
-        paymentUrl: responseData.data.url,
-        billingId: responseData.data.id
+        qrCode: responseData.data.qrCode,
+        pixKey: responseData.data.pixKey,
+        pixId: responseData.data.id
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
