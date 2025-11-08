@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { PixPaymentModal } from "@/components/PixPaymentModal";
 import { 
   Check, 
   X, 
@@ -34,6 +35,12 @@ const CONFIG = {
 const Index = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [loadingPayment, setLoadingPayment] = useState<'pro' | 'business' | null>(null);
+  const [pixModalOpen, setPixModalOpen] = useState(false);
+  const [pixData, setPixData] = useState<{
+    qrCode: string;
+    pixKey: string;
+    amount: number;
+  } | null>(null);
 
   const whatsappLink = (plan = "") => {
     const message = plan 
@@ -46,15 +53,24 @@ const Index = () => {
     setLoadingPayment(plan);
     
     try {
+      const planAmounts = {
+        pro: 31300,
+        business: 46700
+      };
+
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: { plan }
       });
 
       if (error) throw error;
 
-      if (data?.success && data?.paymentUrl) {
-        // Redirecionar para a URL de pagamento do Abacate Pay
-        window.location.href = data.paymentUrl;
+      if (data?.success && data?.qrCode && data?.pixKey) {
+        setPixData({
+          qrCode: data.qrCode,
+          pixKey: data.pixKey,
+          amount: planAmounts[plan]
+        });
+        setPixModalOpen(true);
       } else {
         throw new Error(data?.error || 'Erro ao criar pagamento');
       }
@@ -719,6 +735,15 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Modal de Pagamento PIX */}
+      <PixPaymentModal
+        open={pixModalOpen}
+        onOpenChange={setPixModalOpen}
+        qrCodeBase64={pixData?.qrCode}
+        pixCode={pixData?.pixKey}
+        amount={pixData?.amount || 0}
+      />
 
       {/* Botão Flutuante WhatsApp */}
       <a
