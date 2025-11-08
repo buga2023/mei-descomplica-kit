@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { 
   Check, 
   X, 
@@ -31,12 +33,37 @@ const CONFIG = {
 
 const Index = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [loadingPayment, setLoadingPayment] = useState<'pro' | 'business' | null>(null);
 
   const whatsappLink = (plan = "") => {
     const message = plan 
       ? `Quero%20o%20${plan}%20MEI` 
       : "Quero%20abrir%20meu%20MEI";
     return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
+  };
+
+  const handlePayment = async (plan: 'pro' | 'business') => {
+    setLoadingPayment(plan);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: { plan }
+      });
+
+      if (error) throw error;
+
+      if (data?.success && data?.paymentUrl) {
+        // Redirecionar para a URL de pagamento do Abacate Pay
+        window.location.href = data.paymentUrl;
+      } else {
+        throw new Error(data?.error || 'Erro ao criar pagamento');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error('Erro ao processar pagamento. Tente novamente ou entre em contato via WhatsApp.');
+    } finally {
+      setLoadingPayment(null);
+    }
   };
 
   const testimonials = [
@@ -400,11 +427,13 @@ const Index = () => {
                     <span className="text-sm font-medium">Ajuste/validação de CNAE</span>
                   </li>
                 </ul>
-                <Button className="w-full" variant="hero" asChild>
-                  <a href={whatsappLink("Pro")} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4" />
-                    Fechar no Pro
-                  </a>
+                <Button 
+                  className="w-full" 
+                  variant="hero"
+                  onClick={() => handlePayment('pro')}
+                  disabled={loadingPayment === 'pro'}
+                >
+                  {loadingPayment === 'pro' ? 'Carregando...' : 'Fechar no Pro'}
                 </Button>
               </CardContent>
             </Card>
@@ -444,11 +473,13 @@ const Index = () => {
                     <span className="text-sm">Suporte por 60 dias</span>
                   </li>
                 </ul>
-                <Button className="w-full" variant="default" asChild>
-                  <a href={whatsappLink("Business")} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4" />
-                    Quero o Business
-                  </a>
+                <Button 
+                  className="w-full" 
+                  variant="default"
+                  onClick={() => handlePayment('business')}
+                  disabled={loadingPayment === 'business'}
+                >
+                  {loadingPayment === 'business' ? 'Carregando...' : 'Quero o Business'}
                 </Button>
               </CardContent>
             </Card>
