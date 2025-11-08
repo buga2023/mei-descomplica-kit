@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { PixPaymentModal } from "@/components/PixPaymentModal";
+import { CustomerDataModal } from "@/components/CustomerDataModal";
 import { 
   Check, 
   X, 
@@ -35,6 +36,8 @@ const CONFIG = {
 const Index = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [loadingPayment, setLoadingPayment] = useState<'pro' | 'business' | null>(null);
+  const [customerModalOpen, setCustomerModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<'pro' | 'business' | null>(null);
   const [pixModalOpen, setPixModalOpen] = useState(false);
   const [pixData, setPixData] = useState<{
     qrCode: string;
@@ -49,8 +52,20 @@ const Index = () => {
     return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
   };
 
-  const handlePayment = async (plan: 'pro' | 'business') => {
-    setLoadingPayment(plan);
+  const handleOpenCustomerModal = (plan: 'pro' | 'business') => {
+    setSelectedPlan(plan);
+    setCustomerModalOpen(true);
+  };
+
+  const handlePayment = async (customerData: {
+    name: string;
+    cellphone: string;
+    email: string;
+    taxId: string;
+  }) => {
+    if (!selectedPlan) return;
+    
+    setLoadingPayment(selectedPlan);
     
     try {
       const planAmounts = {
@@ -59,7 +74,10 @@ const Index = () => {
       };
 
       const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: { plan }
+        body: { 
+          plan: selectedPlan,
+          customer: customerData
+        }
       });
 
       if (error) throw error;
@@ -68,8 +86,9 @@ const Index = () => {
         setPixData({
           qrCode: data.qrCode,
           pixKey: data.pixKey,
-          amount: planAmounts[plan]
+          amount: planAmounts[selectedPlan]
         });
+        setCustomerModalOpen(false);
         setPixModalOpen(true);
       } else {
         throw new Error(data?.error || 'Erro ao criar pagamento');
@@ -446,10 +465,10 @@ const Index = () => {
                 <Button 
                   className="w-full" 
                   variant="hero"
-                  onClick={() => handlePayment('pro')}
-                  disabled={loadingPayment === 'pro'}
+                  onClick={() => handleOpenCustomerModal('pro')}
+                  disabled={loadingPayment !== null}
                 >
-                  {loadingPayment === 'pro' ? 'Carregando...' : 'Fechar no Pro'}
+                  Fechar no Pro
                 </Button>
               </CardContent>
             </Card>
@@ -492,10 +511,10 @@ const Index = () => {
                 <Button 
                   className="w-full" 
                   variant="default"
-                  onClick={() => handlePayment('business')}
-                  disabled={loadingPayment === 'business'}
+                  onClick={() => handleOpenCustomerModal('business')}
+                  disabled={loadingPayment !== null}
                 >
-                  {loadingPayment === 'business' ? 'Carregando...' : 'Quero o Business'}
+                  Quero o Business
                 </Button>
               </CardContent>
             </Card>
@@ -736,8 +755,17 @@ const Index = () => {
         </div>
       </footer>
 
+      {/* Modal de Dados do Cliente */}
+      <CustomerDataModal
+        open={customerModalOpen}
+        onOpenChange={setCustomerModalOpen}
+        onSubmit={handlePayment}
+        plan={selectedPlan || 'pro'}
+        loading={loadingPayment !== null}
+      />
+
       {/* Modal de Pagamento PIX */}
-      <PixPaymentModal
+      <PixPaymentModal 
         open={pixModalOpen}
         onOpenChange={setPixModalOpen}
         qrCodeBase64={pixData?.qrCode}
