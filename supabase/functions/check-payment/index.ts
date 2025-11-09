@@ -32,7 +32,7 @@ serve(async (req) => {
 
     console.log(`Checking payment for pixId: ${pixId}`);
     
-    const response = await fetch(`https://api.abacatepay.com/v1/pixQrCode/check/${pixId}`, {
+    const response = await fetch(`https://api.abacatepay.com/v1/pixQrCode/check?id=${pixId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${abacatePayApiKey}`,
