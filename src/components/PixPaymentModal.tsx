@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PixPaymentModalProps {
   open: boolean;
@@ -10,6 +11,7 @@ interface PixPaymentModalProps {
   qrCodeBase64?: string;
   pixCode?: string;
   amount: number;
+  pixId: string;
 }
 
 export const PixPaymentModal = ({ 
@@ -17,9 +19,11 @@ export const PixPaymentModal = ({
   onOpenChange, 
   qrCodeBase64, 
   pixCode,
-  amount 
+  amount,
+  pixId 
 }: PixPaymentModalProps) => {
   const [copied, setCopied] = useState(false);
+  const [checking, setChecking] = useState(false);
 
   const handleCopyPixCode = async () => {
     if (!pixCode) return;
@@ -34,6 +38,37 @@ export const PixPaymentModal = ({
       }, 2000);
     } catch (error) {
       toast.error("Erro ao copiar código");
+    }
+  };
+
+  const handleCheckPayment = async () => {
+    if (!pixId) return;
+    
+    setChecking(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('check-payment', {
+        body: { pixId }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        if (data.status === 'COMPLETED') {
+          toast.success("Pagamento confirmado! Você receberá as instruções por WhatsApp.");
+          onOpenChange(false);
+        } else if (data.status === 'PENDING') {
+          toast.info("Pagamento ainda não identificado. Por favor, tente novamente em alguns instantes.");
+        } else {
+          toast.error("Status do pagamento: " + data.status);
+        }
+      } else {
+        throw new Error(data?.error || 'Erro ao verificar pagamento');
+      }
+    } catch (error) {
+      console.error('Error checking payment:', error);
+      toast.error("Erro ao verificar pagamento. Tente novamente.");
+    } finally {
+      setChecking(false);
     }
   };
 
@@ -102,6 +137,14 @@ export const PixPaymentModal = ({
               <li>Confirme o pagamento</li>
             </ol>
           </div>
+
+          <Button 
+            onClick={handleCheckPayment} 
+            disabled={checking}
+            className="w-full"
+          >
+            {checking ? "Verificando..." : "Já efetuei o pagamento"}
+          </Button>
 
           <p className="text-xs text-center text-muted-foreground">
             Após a confirmação do pagamento, você receberá as instruções por WhatsApp

@@ -43,6 +43,7 @@ const Index = () => {
     qrCode: string;
     pixCode: string;
     amount: number;
+    pixId: string;
   } | null>(null);
 
   const whatsappLink = (plan = "") => {
@@ -82,11 +83,12 @@ const Index = () => {
 
       if (error) throw error;
 
-      if (data?.success && data?.qrCode && data?.pixCode) {
+      if (data?.success && data?.qrCode && data?.pixCode && data?.pixId) {
         setPixData({
           qrCode: data.qrCode,
           pixCode: data.pixCode,
-          amount: planAmounts[selectedPlan]
+          amount: planAmounts[selectedPlan],
+          pixId: data.pixId
         });
         setCustomerModalOpen(false);
         setPixModalOpen(true);
@@ -765,12 +767,13 @@ const Index = () => {
       />
 
       {/* Modal de Pagamento PIX */}
-      <PixPaymentModal 
+      <PixPaymentModal
         open={pixModalOpen}
         onOpenChange={setPixModalOpen}
         qrCodeBase64={pixData?.qrCode}
         pixCode={pixData?.pixCode}
         amount={pixData?.amount || 0}
+        pixId={pixData?.pixId || ''}
       />
 
       {/* Botão Flutuante WhatsApp */}
