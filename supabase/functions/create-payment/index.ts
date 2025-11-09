@@ -87,8 +87,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        qrCode: responseData.data.qrCode,
-        pixKey: responseData.data.pixKey,
+        qrCode: responseData.data.brCodeBase64,
+        pixCode: responseData.data.brCode,
         pixId: responseData.data.id
       }),
       {

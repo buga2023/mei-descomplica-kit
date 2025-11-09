@@ -41,7 +41,7 @@ const Index = () => {
   const [pixModalOpen, setPixModalOpen] = useState(false);
   const [pixData, setPixData] = useState<{
     qrCode: string;
-    pixKey: string;
+    pixCode: string;
     amount: number;
   } | null>(null);
 
@@ -82,10 +82,10 @@ const Index = () => {
 
       if (error) throw error;
 
-      if (data?.success && data?.qrCode && data?.pixKey) {
+      if (data?.success && data?.qrCode && data?.pixCode) {
         setPixData({
           qrCode: data.qrCode,
-          pixKey: data.pixKey,
+          pixCode: data.pixCode,
           amount: planAmounts[selectedPlan]
         });
         setCustomerModalOpen(false);
@@ -769,7 +769,7 @@ const Index = () => {
         open={pixModalOpen}
         onOpenChange={setPixModalOpen}
         qrCodeBase64={pixData?.qrCode}
-        pixCode={pixData?.pixKey}
+        pixCode={pixData?.pixCode}
         amount={pixData?.amount || 0}
       />
 
