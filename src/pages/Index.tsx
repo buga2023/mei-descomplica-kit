@@ -166,7 +166,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={pejotizeLogo} alt="Pejotize" className="h-10 w-auto object-contain" />
+            <img src={pejotizeLogo} alt="Pejotize" className="h-14 w-auto object-contain" />
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#como-funciona" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -708,7 +708,7 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <img src={pejotizeLogo} alt="Pejotize" className="h-8 w-auto object-contain" />
+                <img src={pejotizeLogo} alt="Pejotize" className="h-10 w-auto object-contain" />
               </div>
               <p className="text-sm text-muted-foreground">
                 Facilitando a abertura de MEI desde 2020. Mais de 500 empresas abertas.
