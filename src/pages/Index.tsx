@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { PixPaymentModal } from "@/components/PixPaymentModal";
 import { CustomerDataModal } from "@/components/CustomerDataModal";
+import pejotizeLogo from "@/assets/pejotize-logo.png";
 import { 
   Check, 
   X, 
@@ -165,8 +166,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">MEI Fácil</span>
+            <img src={pejotizeLogo} alt="Pejotize" className="h-10 w-auto object-contain" />
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#como-funciona" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -708,8 +708,7 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <FileCheck className="h-6 w-6 text-primary" />
-                <span className="text-lg font-bold text-foreground">MEI Fácil</span>
+                <img src={pejotizeLogo} alt="Pejotize" className="h-8 w-auto object-contain" />
               </div>
               <p className="text-sm text-muted-foreground">
                 Facilitando a abertura de MEI desde 2020. Mais de 500 empresas abertas.
@@ -747,7 +746,7 @@ const Index = () => {
 
           <div className="border-t pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-              <p>© 2025 MEI Fácil. Todos os direitos reservados.</p>
+              <p>© 2025 Pejotize. Todos os direitos reservados.</p>
               <div className="flex gap-6">
                 <a href="#" className="hover:text-foreground transition-colors">Termos de Uso</a>
                 <a href="#" className="hover:text-foreground transition-colors">Privacidade (LGPD)</a>
