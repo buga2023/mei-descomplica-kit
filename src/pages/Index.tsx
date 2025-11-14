@@ -189,18 +189,20 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-20 lg:py-32">
-        <div className="container">
+      <section className="relative overflow-hidden gradient-hero-animated py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background pointer-events-none" />
+        <div className="absolute inset-0 gradient-speed opacity-30 pointer-events-none" />
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <Badge className="w-fit mx-auto" variant="secondary">
+              <Badge className="w-fit mx-auto bg-accent/90 text-accent-foreground backdrop-blur-sm border-accent/20" variant="secondary">
                 <Award className="h-3 w-3 mr-1" />
                 Especialista em MEI
               </Badge>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-foreground">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-white drop-shadow-lg">
                 Abra seu CNPJ MEI em poucas horas, sem burocracia
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
                 Eu cuido de tudo: cadastro, CNAE, emissão de CCMEI e orientações de nota fiscal. Comece a faturar legalmente hoje mesmo.
               </p>
               
@@ -221,16 +223,16 @@ const Index = () => {
               </div>
 
               <div className="flex flex-wrap gap-6 pt-4 justify-center">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Shield className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Shield className="h-5 w-5 text-accent" />
                   Atendimento especializado
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <FileCheck className="h-5 w-5 text-secondary" />
+                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <FileCheck className="h-5 w-5 text-accent" />
                   Pagamento seguro
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Shield className="h-5 w-5 text-info" />
+                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Shield className="h-5 w-5 text-accent" />
                   Conforme LGPD
                 </div>
               </div>
