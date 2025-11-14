@@ -236,7 +236,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+            <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200 pt-12">
               <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border bg-muted">
                 <iframe
                   src={CONFIG.VIDEO_URL}
