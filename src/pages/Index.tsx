@@ -191,20 +191,20 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-20 lg:py-32">
         <div className="container">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
-            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-left-8 duration-700">
-              <Badge className="w-fit" variant="secondary">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+              <Badge className="w-fit mx-auto" variant="secondary">
                 <Award className="h-3 w-3 mr-1" />
                 Especialista em MEI
               </Badge>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-foreground">
                 Abra seu CNPJ MEI em poucas horas, sem burocracia
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl">
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Eu cuido de tudo: cadastro, CNAE, emissão de CCMEI e orientações de nota fiscal. Comece a faturar legalmente hoje mesmo.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="hero" size="xl" asChild className="group">
                   <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-5 w-5" />
@@ -220,7 +220,7 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="flex flex-wrap gap-6 pt-4">
+              <div className="flex flex-wrap gap-6 pt-4 justify-center">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Shield className="h-5 w-5 text-primary" />
                   Atendimento especializado
@@ -235,8 +235,24 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200 pt-12">
+      {/* Video Section */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center space-y-4 mb-10">
+              <h2 className="text-3xl font-bold text-foreground">
+                Veja como é simples abrir seu MEI
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Assista ao vídeo e entenda todo o processo
+              </p>
+            </div>
+            
+            <div className="relative animate-in fade-in zoom-in-95 duration-700">
               <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border bg-muted">
                 <iframe
                   src={CONFIG.VIDEO_URL}
