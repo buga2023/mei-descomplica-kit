@@ -50,10 +50,12 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --info: 216 100% 18%;
     
-    /* Gradients */
+    /* Gradients - Azul e Amarelo com movimento para agilidade */
     --gradient-primary: linear-gradient(135deg, hsl(216 100% 18%), hsl(216 100% 28%));
-    --gradient-hero: linear-gradient(135deg, hsl(216 100% 18%), hsl(44 88% 57%));
+    --gradient-hero: linear-gradient(120deg, hsl(216 100% 50%), hsl(216 100% 40%), hsl(44 88% 57%), hsl(44 100% 65%));
+    --gradient-hero-animated: linear-gradient(120deg, hsl(216 100% 45%) 0%, hsl(206 100% 50%) 25%, hsl(44 88% 57%) 75%, hsl(44 100% 65%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(44 88% 57%), hsl(44 88% 62%));
+    --gradient-speed: linear-gradient(90deg, hsl(216 100% 50% / 0.1) 0%, hsl(44 88% 57% / 0.15) 50%, hsl(216 100% 50% / 0.1) 100%);
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(215 25% 15% / 0.05);
@@ -126,10 +128,22 @@ All colors MUST be HSL.
   
   .gradient-hero {
     background: var(--gradient-hero);
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
+  .gradient-hero-animated {
+    background: var(--gradient-hero-animated);
+    background-size: 300% 300%;
+    animation: gradient-flow 10s ease infinite;
   }
   
   .gradient-accent {
     background: var(--gradient-accent);
+  }
+  
+  .gradient-speed {
+    background: var(--gradient-speed);
   }
   
   .shadow-glow {
@@ -138,5 +152,26 @@ All colors MUST be HSL.
   
   .transition-smooth {
     transition: var(--transition-smooth);
+  }
+  
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
   }
 }
