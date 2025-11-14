@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { PixPaymentModal } from "@/components/PixPaymentModal";
 import { CustomerDataModal } from "@/components/CustomerDataModal";
 import pejotizeLogo from "@/assets/pejotize-logo.png";
-import professionalPhoto from "@/assets/professional-photo.png";
 import { 
   Check, 
   X, 
@@ -190,98 +189,63 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden gradient-hero min-h-[600px] lg:min-h-[700px]">
-        {/* Decorative shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="container relative z-10 py-20 lg:py-28">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Text content */}
-            <div className="flex flex-col gap-8 text-white animate-in fade-in slide-in-from-left-8 duration-700">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Você cuida do seu negócio.
-                <br />
-                <span className="text-accent">A gente cuida do seu CNPJ.</span>
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-20 lg:py-32">
+        <div className="container">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-left-8 duration-700">
+              <Badge className="w-fit" variant="secondary">
+                <Award className="h-3 w-3 mr-1" />
+                Especialista em MEI
+              </Badge>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-foreground">
+                Abra seu CNPJ MEI em poucas horas, sem burocracia
               </h1>
-              
-              <p className="text-lg lg:text-xl text-white/90 max-w-xl">
-                Soluções completas para abertura, regularização e gestão contábil da sua empresa — rápido, fácil e 100% online.
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                Eu cuido de tudo: cadastro, CNAE, emissão de CCMEI e orientações de nota fiscal. Comece a faturar legalmente hoje mesmo.
               </p>
-
-              {/* Benefits list */}
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="rounded-full bg-accent/20 p-1 mt-0.5">
-                    <Check className="h-4 w-4 text-accent" />
-                  </div>
-                  <span className="text-white/95">Abertura de MEI em até 24 horas</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="rounded-full bg-accent/20 p-1 mt-0.5">
-                    <Check className="h-4 w-4 text-accent" />
-                  </div>
-                  <span className="text-white/95">Alteração de contrato social</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="rounded-full bg-accent/20 p-1 mt-0.5">
-                    <Check className="h-4 w-4 text-accent" />
-                  </div>
-                  <span className="text-white/95">Regularização de alvarás e débitos tributários</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="rounded-full bg-accent/20 p-1 mt-0.5">
-                    <Check className="h-4 w-4 text-accent" />
-                  </div>
-                  <span className="text-white/95">Emissão de notas e suporte especializado</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="rounded-full bg-accent/20 p-1 mt-0.5">
-                    <Check className="h-4 w-4 text-accent" />
-                  </div>
-                  <span className="text-white/95">Atendimento humanizado e totalmente online</span>
-                </li>
-              </ul>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button 
-                  size="xl" 
-                  className="bg-accent hover:bg-accent-hover text-primary font-bold shadow-xl"
-                  asChild
-                >
-                  <a href="#planos">
-                    Abrir meu CNPJ agora
-                    <ArrowRight className="h-5 w-5" />
-                  </a>
-                </Button>
-                <Button 
-                  size="xl" 
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold"
-                  asChild
-                >
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button variant="hero" size="xl" asChild className="group">
                   <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-5 w-5" />
-                    Falar com um especialista
+                    Falar no WhatsApp agora
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
+                <Button variant="outline" size="xl" asChild>
+                  <a href="#planos">
+                    Comparar planos
+                    <ChevronRight className="h-5 w-5" />
+                  </a>
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap gap-6 pt-4">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Shield className="h-5 w-5 text-primary" />
+                  Atendimento especializado
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <FileCheck className="h-5 w-5 text-secondary" />
+                  Pagamento seguro
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Shield className="h-5 w-5 text-info" />
+                  Conforme LGPD
+                </div>
               </div>
             </div>
 
-            {/* Right side - Professional photo */}
-            <div className="relative lg:flex justify-end items-end hidden animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-              <div className="relative z-10">
-                <img 
-                  src={professionalPhoto} 
-                  alt="Especialista em contabilidade Pejotize" 
-                  className="w-full max-w-md lg:max-w-lg object-contain drop-shadow-2xl"
+            <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+              <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border bg-muted">
+                <iframe
+                  src={CONFIG.VIDEO_URL}
+                  title="Como funciona a abertura do MEI"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
               </div>
-              {/* Decorative elements */}
-              <div className="absolute bottom-0 right-0 w-72 h-72 bg-primary/20 rounded-full blur-3xl -z-10"></div>
             </div>
           </div>
         </div>
