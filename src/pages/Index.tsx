@@ -8,7 +8,8 @@ import { toast } from "sonner";
 import { PixPaymentModal } from "@/components/PixPaymentModal";
 import { CustomerDataModal } from "@/components/CustomerDataModal";
 import pejotizeLogo from "@/assets/pejotize-logo.png";
-import { 
+import spokespersonImage from "@/assets/spokesperson.png";
+import {
   Check, 
   X, 
   MessageCircle, 
@@ -193,49 +194,56 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background pointer-events-none" />
         <div className="absolute inset-0 gradient-speed opacity-30 pointer-events-none" />
         <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <Badge className="w-fit mx-auto bg-accent/90 text-accent-foreground backdrop-blur-sm border-accent/20" variant="secondary">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Texto à esquerda */}
+            <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-left-8 duration-700">
+              <Badge className="w-fit bg-accent/90 text-accent-foreground backdrop-blur-sm border-accent/20" variant="secondary">
                 <Award className="h-3 w-3 mr-1" />
                 Especialista em MEI
               </Badge>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-white drop-shadow-lg">
                 Abra seu CNPJ MEI em poucas horas, sem burocracia
               </h1>
-              <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">
-                Eu cuido de tudo: cadastro, CNAE, emissão de CCMEI e orientações de nota fiscal. Comece a faturar legalmente hoje mesmo.
+              <p className="text-lg text-white/90 drop-shadow-md">
+                Processo 100% online, atendimento personalizado e suporte completo para você começar a empreender do jeito certo.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="hero" size="xl" asChild className="group">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" variant="whatsapp" className="group" asChild>
                   <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-5 w-5" />
-                    Falar no WhatsApp agora
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Quero abrir meu MEI
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Button>
-                <Button variant="outline" size="xl" asChild>
+                <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20" asChild>
                   <a href="#planos">
-                    Comparar planos
-                    <ChevronRight className="h-5 w-5" />
+                    Ver planos
                   </a>
                 </Button>
               </div>
-
-              <div className="flex flex-wrap gap-6 pt-4 justify-center">
-                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Shield className="h-5 w-5 text-accent" />
-                  Atendimento especializado
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Shield className="h-4 w-4 text-accent" />
+                  <span className="text-sm text-white drop-shadow">Processo seguro</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <FileCheck className="h-5 w-5 text-accent" />
-                  Pagamento seguro
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Clock className="h-4 w-4 text-accent" />
+                  <span className="text-sm text-white drop-shadow">Abertura rápida</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/90 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Shield className="h-5 w-5 text-accent" />
-                  Conforme LGPD
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Users className="h-4 w-4 text-accent" />
+                  <span className="text-sm text-white drop-shadow">Atendimento especializado</span>
                 </div>
               </div>
+            </div>
+            
+            {/* Imagem da garota propaganda à direita */}
+            <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+              <img 
+                src={spokespersonImage} 
+                alt="Especialista em abertura de MEI" 
+                className="w-full h-auto max-w-lg mx-auto lg:max-w-full object-contain drop-shadow-2xl"
+              />
             </div>
           </div>
         </div>
