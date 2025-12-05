@@ -39,7 +39,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
         toast.info("Enviando seus dados...");
 
         try {
-            const response = await fetch('http://localhost:3001/api/send-email', {
+            const response = await fetch('/.netlify/functions/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
     const handleGeneratePix = async () => {
         setGeneratingPix(true);
         try {
-            const response = await fetch('http://localhost:3001/api/create-pix-payment', {
+            const response = await fetch('/.netlify/functions/create-pix-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -320,7 +320,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                                 setTimeout(() => {
                                                     setStep('success');
                                                     // Also send the receipt email
-                                                    fetch('http://localhost:3001/api/send-client-receipt', {
+                                                    fetch('/.netlify/functions/send-client-receipt', {
                                                         method: 'POST',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({
