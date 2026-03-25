@@ -1,60 +1,95 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export const DynamicBackground = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) return;
+
+        const canvas = canvasRef.current;
+        const container = containerRef.current;
+        if (!canvas || !container) return;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        let animationId: number;
+        let time = 0;
+        let isVisible = true;
+        const isMobile = window.innerWidth < 768;
+        const frameInterval = isMobile ? 1000 / 20 : 0; // 20fps on mobile
+        let lastFrameTime = 0;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => { isVisible = entry.isIntersecting; },
+            { threshold: 0 }
+        );
+        observer.observe(container);
+
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        resize();
+        window.addEventListener("resize", resize);
+
+        const SPACING = 28;
+        const DOT_RADIUS = 1;
+        const ACTIVE_COLOR = "0,29,110";
+        const BASE_OPACITY = 0.06;
+        const WAVE_AMPLITUDE = 0.55;
+        const WAVE_SPEED = 0.012;
+
+        const draw = (timestamp: number) => {
+            animationId = requestAnimationFrame(draw);
+
+            if (!isVisible) return;
+
+            if (frameInterval > 0 && timestamp - lastFrameTime < frameInterval) return;
+            lastFrameTime = timestamp;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const cols = Math.ceil(canvas.width / SPACING) + 1;
+            const rows = Math.ceil(canvas.height / SPACING) + 1;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * SPACING;
+                    const y = row * SPACING;
+
+                    const wave = Math.sin(col * 0.22 + time) * Math.cos(row * 0.18 + time * 0.7);
+                    const opacity = BASE_OPACITY + WAVE_AMPLITUDE * (wave * 0.5 + 0.5) * 0.25;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, DOT_RADIUS, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${ACTIVE_COLOR}, ${opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            time += WAVE_SPEED;
+        };
+
+        animationId = requestAnimationFrame(draw);
+
+        return () => {
+            cancelAnimationFrame(animationId);
+            window.removeEventListener("resize", resize);
+            observer.disconnect();
+        };
+    }, []);
+
     return (
-        <div className="fixed inset-0 z-[-10] overflow-hidden pointer-events-none bg-slate-50">
-            {/* Base Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100 opacity-80" />
-
-            {/* Animated Blob 1 - Royal Blue */}
-            <motion.div
-                className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-blue-900/5 rounded-full blur-[120px]"
-                animate={{
-                    x: [0, 100, 0],
-                    y: [0, 50, 0],
-                    scale: [1, 1.1, 1],
-                }}
-                transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                }}
+        <div ref={containerRef} className="fixed inset-0 z-[-10] pointer-events-none bg-slate-50">
+            <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full"
+                aria-hidden="true"
             />
-
-            {/* Animated Blob 2 - Amber */}
-            <motion.div
-                className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/5 rounded-full blur-[100px]"
-                animate={{
-                    x: [0, -50, 0],
-                    y: [0, 100, 0],
-                    scale: [1, 1.2, 1],
-                }}
-                transition={{
-                    duration: 25,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2,
-                }}
-            />
-
-            {/* Animated Blob 3 - Deep Blue */}
-            <motion.div
-                className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] bg-blue-800/5 rounded-full blur-[150px]"
-                animate={{
-                    x: [0, 50, 0],
-                    y: [0, -50, 0],
-                    scale: [1, 1.1, 1],
-                }}
-                transition={{
-                    duration: 30,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 5,
-                }}
-            />
-
-            {/* Overlay Texture (Optional for "Fintech" feel) */}
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay" />
         </div>
     );
 };

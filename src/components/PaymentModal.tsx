@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Check, Loader2, QrCode, Copy, X, User, Mail, Phone, FileText } from "lucide-react";
-import { CONFIG } from "@/config";
+import { CONFIG, TOAST_MESSAGES } from "@/config";
 
 interface PaymentModalProps {
     open: boolean;
@@ -31,7 +31,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
     const handleDetailsSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.name || !formData.email || !formData.whatsapp || !formData.taxId) {
-            toast.error("Por favor, preencha todos os campos.");
+            toast.error(TOAST_MESSAGES.FIELDS_REQUIRED);
             return;
         }
 
@@ -54,14 +54,14 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
             });
 
             if (response.ok) {
-                toast.success("Dados enviados com sucesso!");
+                toast.success(TOAST_MESSAGES.DATA_SENT);
                 setStep('form');
             } else {
                 throw new Error('Falha ao enviar email');
             }
         } catch (error) {
             console.error("Erro ao enviar email:", error);
-            toast.error("Não foi possível enviar o email, mas vamos prosseguir.");
+            toast.error(TOAST_MESSAGES.DATA_SEND_ERROR);
             setStep('form');
         } finally {
             setLoading(false);
@@ -70,7 +70,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
 
     const handlePixCopy = () => {
         navigator.clipboard.writeText(CONFIG.PIX_CODE);
-        toast.success("Código PIX copiado!");
+        toast.success(TOAST_MESSAGES.PIX_COPIED);
     };
 
     const handleClose = () => {
@@ -111,13 +111,13 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                     pixCode: data.pixCode,
                     pixId: data.pixId
                 });
-                toast.success("QR Code gerado com sucesso!");
+                toast.success(TOAST_MESSAGES.QR_GENERATED);
             } else {
                 throw new Error(data.error || 'Erro ao gerar Pix');
             }
         } catch (error) {
             console.error("Erro ao gerar Pix:", error);
-            toast.error("Erro ao gerar QR Code. Tente novamente.");
+            toast.error(TOAST_MESSAGES.QR_ERROR);
         } finally {
             setGeneratingPix(false);
         }
@@ -132,11 +132,11 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                         <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
                             {step === 'details' ? (
                                 <>
-                                    Seus <span className="text-amber-500">Dados</span>
+                                    Seus <span className="text-brand-gold">Dados</span>
                                 </>
                             ) : step === 'form' ? (
                                 <>
-                                    Pagamento <span className="text-amber-500">Seguro</span>
+                                    Pagamento <span className="text-brand-gold">Seguro</span>
                                 </>
                             ) : (
                                 <>
@@ -177,7 +177,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                         required
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
+                                        className="pl-12 bg-slate-50 border-slate-200 text-brand-navy placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
                                     />
                                 </div>
                             </div>
@@ -193,7 +193,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                         required
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
+                                        className="pl-12 bg-slate-50 border-slate-200 text-brand-navy placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
                                     />
                                 </div>
                             </div>
@@ -209,7 +209,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                         required
                                         value={formData.whatsapp}
                                         onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                                        className="pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
+                                        className="pl-12 bg-slate-50 border-slate-200 text-brand-navy placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
                                     />
                                 </div>
                                 <p className="text-xs text-slate-500 ml-1">Usaremos este número para contato sobre seu MEI.</p>
@@ -225,7 +225,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                         required
                                         value={formData.taxId}
                                         onChange={(e) => setFormData({ ...formData, taxId: e.target.value })}
-                                        className="pl-12 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
+                                        className="pl-12 bg-slate-50 border-slate-200 text-brand-navy placeholder:text-slate-400 focus-visible:ring-brand-gold focus-visible:border-brand-gold h-12"
                                     />
                                 </div>
                             </div>
@@ -251,7 +251,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                             <QrCode className="w-12 h-12 text-brand-navy" />
                                         </div>
                                         <div className="text-center space-y-2">
-                                            <h3 className="font-bold text-lg text-slate-900">Pagar com PIX</h3>
+                                            <h3 className="font-bold text-lg text-brand-navy">Pagar com PIX</h3>
                                             <p className="text-slate-500 text-sm max-w-[250px]">
                                                 Clique no botão abaixo para gerar seu código de pagamento exclusivo.
                                             </p>
@@ -302,7 +302,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                                     size="icon"
                                                     onClick={() => {
                                                         navigator.clipboard.writeText(pixData.pixCode);
-                                                        toast.success("Código PIX copiado!");
+                                                        toast.success(TOAST_MESSAGES.PIX_COPIED);
                                                     }}
                                                     className="h-12 w-12 border-brand-gold text-brand-gold hover:bg-brand-gold/10 hover:text-brand-gold shrink-0"
                                                 >
@@ -347,7 +347,7 @@ export const PaymentModal = ({ open, onOpenChange, plan, amount }: PaymentModalP
                                 <Check className="w-12 h-12 text-emerald-600 relative z-10" />
                             </div>
                             <div className="space-y-2">
-                                <h3 className="text-2xl font-bold text-slate-900">Pagamento Confirmado!</h3>
+                                <h3 className="text-2xl font-bold text-brand-navy">Pagamento Confirmado!</h3>
                                 <p className="text-slate-500 max-w-xs mx-auto leading-relaxed">
                                     Recebemos seu pagamento com sucesso. Verifique seu e-mail para os próximos passos.
                                 </p>

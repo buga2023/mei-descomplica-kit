@@ -12,3 +12,19 @@ export const CONFIG = {
         PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     }
 };
+
+export const TOAST_MESSAGES = {
+    PIX_COPIED: "Código PIX copiado!",
+    PAYMENT_CONFIRMED: "Pagamento confirmado!",
+    PAYMENT_PENDING: "Pagamento ainda não identificado. Tente novamente em alguns instantes.",
+    DATA_SENT: "Dados enviados com sucesso!",
+    DATA_SEND_ERROR: "Não foi possível enviar o email, mas vamos prosseguir.",
+    QR_GENERATED: "QR Code gerado com sucesso!",
+    QR_ERROR: "Erro ao gerar QR Code. Tente novamente.",
+    FIELDS_REQUIRED: "Por favor, preencha todos os campos.",
+    COPY_ERROR: "Erro ao copiar código",
+};
+
+export function whatsappLink(message = "Quero abrir meu MEI") {
+    return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}

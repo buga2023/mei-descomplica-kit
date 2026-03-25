@@ -59,6 +59,9 @@ export default {
           gold: "hsl(var(--brand-gold))",
         },
       },
+      spacing: {
+        "section-y": "6rem",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

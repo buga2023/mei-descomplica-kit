@@ -21,13 +21,11 @@ const content = {
             },
             {
                 icon: CreditCard,
-                title: "Realize o pagamento",
-                text: "Efetue o pagamento da taxa única de serviço via PIX ou Cartão de Crédito com total segurança."
+                text: "Efetue o pagamento via pix ou cartão de credito com total segurança"
             },
             {
                 icon: Check,
-                title: "Receba seu CNPJ",
-                text: "Nossa equipe processa seu pedido junto ao governo e você recebe o CNPJ e CCMEI no seu e-mail em minutos."
+                text: "Nossa equipe processa seu pedido junto a receita federal e você recebe seu CNPJ em ate dois dias uteis"
             }
         ]
     },

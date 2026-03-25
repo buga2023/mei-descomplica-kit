@@ -1,9 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
-import {
-    Lock,
-    Shield
-} from "lucide-react";
+import { Lock, Shield, Award } from "lucide-react";
 
 export const FAQ = () => {
     const faqItems = [
@@ -33,32 +30,45 @@ export const FAQ = () => {
     };
 
     return (
-        <section id="faq" className="py-24 bg-slate-50">
-            <div className="container max-w-4xl">
+        <section id="faq" className="py-section-y bg-slate-50 relative overflow-hidden">
+            {/* Decorative circle */}
+            <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full border border-brand-gold/10 pointer-events-none" />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full border border-brand-navy/5 pointer-events-none" />
+
+            <div className="container max-w-4xl relative z-10">
                 <div className="grid md:grid-cols-2 gap-12">
                     <motion.div {...fadeInUp}>
-                        <h2 className="text-3xl font-bold text-slate-900 mb-6">Dúvidas Frequentes</h2>
-                        <p className="text-slate-600 mb-8 text-lg">
+                        <h2 className="section-heading text-brand-navy mb-6">Dúvidas Frequentes</h2>
+                        <p className="text-brand-navy/70 mb-8 text-lg">
                             Entenda tudo sobre o processo de abertura e regularização do seu MEI.
                         </p>
 
-                        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                            <div className="flex items-center gap-5 mb-6">
-                                <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center">
+                        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+                            <div className="flex items-center gap-5">
+                                <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
                                     <Lock className="w-7 h-7 text-emerald-600" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 text-lg">Dados Seguros</h3>
+                                    <h3 className="font-bold text-brand-navy text-lg">Dados Seguros</h3>
                                     <p className="text-slate-500">Seus dados são protegidos e criptografados.</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
+                                <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
                                     <Shield className="w-7 h-7 text-primary" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 text-lg">Garantia de Entrega</h3>
+                                    <h3 className="font-bold text-brand-navy text-lg">Garantia de Entrega</h3>
                                     <p className="text-slate-500">CNPJ entregue ou seu dinheiro de volta.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-5">
+                                <div className="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+                                    <Award className="w-7 h-7 text-brand-gold" />
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-brand-navy text-lg">5.000+ Clientes</h3>
+                                    <p className="text-slate-500">Nota 4.9/5 de satisfação comprovada.</p>
                                 </div>
                             </div>
                         </div>
@@ -67,8 +77,12 @@ export const FAQ = () => {
                     <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
                         <Accordion type="single" collapsible className="w-full space-y-4">
                             {faqItems.map((item, index) => (
-                                <AccordionItem key={index} value={`item-${index}`} className="bg-white border border-slate-100 rounded-2xl px-6 shadow-sm">
-                                    <AccordionTrigger className="text-slate-900 font-bold hover:no-underline hover:text-primary text-left">
+                                <AccordionItem
+                                    key={index}
+                                    value={`item-${index}`}
+                                    className="bg-white border border-slate-100 rounded-2xl px-6 shadow-sm data-[state=open]:border-l-4 data-[state=open]:border-l-brand-gold transition-all"
+                                >
+                                    <AccordionTrigger className="text-brand-navy font-bold hover:no-underline hover:text-brand-gold text-left">
                                         {item.question}
                                     </AccordionTrigger>
                                     <AccordionContent className="text-slate-600 text-base leading-relaxed">

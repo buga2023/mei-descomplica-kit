@@ -1,135 +1,101 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import {
-    ShieldCheck,
-    Banknote,
-    FileText,
-    Baby,
-    HeartPulse,
-    Building2,
-    Gavel,
-    Users,
-    ScrollText
-} from "lucide-react";
+import { ShieldCheck, FileText, Scale, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const benefits = [
+const highlights = [
     {
         icon: ShieldCheck,
-        title: "Aposentadoria",
-        description: "Garanta seu futuro com aposentadoria por idade ou invalidez, pagando o INSS reduzido."
-    },
-    {
-        icon: HeartPulse,
-        title: "Auxílio-Doença",
-        description: "Tenha segurança financeira em caso de problemas de saúde que impeçam seu trabalho."
-    },
-    {
-        icon: Baby,
-        title: "Salário-Maternidade",
-        description: "Benefício garantido para as mamães empreendedoras se dedicarem aos seus bebês."
+        title: "Contribuição do INSS Garantida",
+        stat: "100%",
+        statLabel: "dos direitos previdenciários",
+        description: "Como MEI, você contribui com uma alíquota reduzida e garante seus direitos previdenciários: aposentadoria, auxílio-doença e salário-maternidade."
     },
     {
         icon: FileText,
         title: "Emissão de Nota Fiscal",
-        description: "Profissionalize seu negócio e feche contratos com outras empresas e órgãos públicos."
+        stat: "∞",
+        statLabel: "notas fiscais por mês",
+        description: "Profissionalize seu negócio e feche contratos com outras empresas e órgãos públicos emitindo notas fiscais de serviço ou produto."
     },
     {
-        icon: Banknote,
-        title: "Crédito Facilitado",
-        description: "Acesso a linhas de crédito e empréstimos com taxas especiais para PJ."
-    },
-    {
-        icon: Building2,
-        title: "Venda para o Governo",
-        description: "Participe de licitações e venda seus produtos ou serviços para a administração pública."
-    },
-    {
-        icon: Gavel,
-        title: "Isenção de Tributos",
-        description: "Isenção de tributos federais (IR, PIS, COFINS, IPI, CSLL) com valor fixo mensal baixo."
-    },
-    {
-        icon: Users,
-        title: "Contratação de Funcionário",
-        description: "Possibilidade de contratar um empregado com custo previdenciário reduzido."
-    },
-    {
-        icon: ScrollText,
-        title: "Dispensa de Alvará",
-        description: "Para atividades de baixo risco, você pode começar a trabalhar imediatamente sem vistoria prévia."
+        icon: Scale,
+        title: "Conformidade Legal",
+        stat: "0",
+        statLabel: "tributos federais",
+        description: "Opere 100% dentro da lei, com CNPJ ativo, isenção de tributos federais e toda a segurança jurídica que sua empresa precisa para crescer."
     }
 ];
 
 export const CnpjBenefits = () => {
-    const [selectedBenefit, setSelectedBenefit] = useState<typeof benefits[0] | null>(null);
-
     return (
-        <section className="py-12">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-brand-navy mb-6">
-                    Benefícios de ser MEI
-                </h2>
-                <p className="text-brand-navy/70 text-xl">
-                    Além de formalizar seu negócio, você garante direitos previdenciários e vantagens exclusivas.
-                </p>
-            </div>
+        <section className="py-section-y bg-gradient-to-b from-brand-navy via-brand-navy to-[#001050]">
+            <div className="container">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center max-w-3xl mx-auto mb-14"
+                >
+                    {/* Decorative gold line */}
+                    <div className="w-16 h-1 bg-brand-gold mx-auto mb-6 rounded-full" />
+                    <h2 className="section-heading text-white mb-4">
+                        3 Vantagens de Abrir Seu MEI
+                    </h2>
+                    <p className="text-brand-gold/80 text-xl">
+                        Tudo o que você precisa para formalizar seu negócio com segurança.
+                    </p>
+                </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {benefits.map((benefit, index) => (
-                    <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        onClick={() => setSelectedBenefit(benefit)}
-                        className="bg-white p-8 rounded-3xl border border-slate-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                    >
-                        <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 flex items-center justify-center mb-6 text-brand-gold">
-                            <benefit.icon className="w-7 h-7" />
-                        </div>
-                        <h3 className="text-xl font-bold text-brand-navy mb-3">
-                            {benefit.title}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                            {benefit.description}
-                        </p>
-                    </motion.div>
-                ))}
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {highlights.map((item, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.15, duration: 0.5 }}
+                            whileHover={{ y: -8 }}
+                            className="bg-white/5 border border-brand-gold/30 rounded-3xl p-10 hover:border-brand-gold hover:bg-white/10 hover:shadow-2xl hover:shadow-brand-gold/10 transition-all duration-300 flex flex-col gap-6"
+                        >
+                            {/* Icon container */}
+                            <div className="w-16 h-16 rounded-2xl bg-brand-gold/15 flex items-center justify-center">
+                                <item.icon className="w-8 h-8 text-brand-gold" />
+                            </div>
 
-            <Dialog open={!!selectedBenefit} onOpenChange={(open) => !open && setSelectedBenefit(null)}>
-                <DialogContent className="sm:max-w-md bg-white border-none shadow-2xl overflow-hidden">
-                    <DialogHeader className="bg-brand-gold p-8 -mx-6 -mt-6 mb-6 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
-                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-xl translate-y-1/2 -translate-x-1/2"></div>
+                            <h3 className="text-lg font-bold text-white uppercase tracking-wide leading-tight">
+                                {item.title}
+                            </h3>
 
-                        <div className="flex items-center gap-4 relative z-10">
-                            {selectedBenefit && (
-                                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-brand-navy backdrop-blur-sm">
-                                    <selectedBenefit.icon className="w-6 h-6" />
-                                </div>
-                            )}
-                            <DialogTitle className="text-2xl font-bold text-brand-navy">
-                                {selectedBenefit?.title}
-                            </DialogTitle>
-                        </div>
-                    </DialogHeader>
+                            {/* Stat highlight */}
+                            <div>
+                                <span className="text-3xl font-bold text-brand-gold">{item.stat}</span>
+                                <span className="block text-sm text-white/50 mt-1">{item.statLabel}</span>
+                            </div>
 
-                    <div className="px-2 pb-6">
-                        <DialogDescription className="text-lg text-slate-600 leading-relaxed">
-                            {selectedBenefit?.description}
-                        </DialogDescription>
-
-                        <div className="mt-8 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <p className="text-sm text-slate-500 italic">
-                                * Este benefício é garantido por lei para todos os MEIs que mantêm suas contribuições em dia.
+                            <p className="text-white/70 leading-relaxed text-base">
+                                {item.description}
                             </p>
-                        </div>
-                    </div>
-                </DialogContent>
-            </Dialog>
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="text-center mt-14"
+                >
+                    <Button size="lg" className="h-16 px-10 text-lg font-bold rounded-2xl bg-brand-gold hover:bg-brand-gold/90 text-brand-navy shadow-xl transition-all hover:scale-105 animate-glow-gold" asChild>
+                        <a href="#planos">
+                            Abrir meu MEI agora
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </a>
+                    </Button>
+                </motion.div>
+            </div>
         </section>
     );
 };

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { TOAST_MESSAGES } from "@/config";
 
 interface PixPaymentModalProps {
   open: boolean;
@@ -31,13 +32,13 @@ export const PixPaymentModal = ({
     try {
       await navigator.clipboard.writeText(pixCode);
       setCopied(true);
-      toast.success("Código PIX copiado!");
+      toast.success(TOAST_MESSAGES.PIX_COPIED);
       
       setTimeout(() => {
         setCopied(false);
       }, 2000);
     } catch (error) {
-      toast.error("Erro ao copiar código");
+      toast.error(TOAST_MESSAGES.COPY_ERROR);
     }
   };
 
