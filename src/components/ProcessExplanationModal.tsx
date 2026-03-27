@@ -1,6 +1,6 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight, FileText, CreditCard, Check, FileCheck } from "lucide-react";
+import { ArrowRight, FileText, CreditCard, Check, FileCheck, CheckCircle } from "lucide-react";
 
 interface ProcessExplanationModalProps {
     open: boolean;
@@ -14,61 +14,27 @@ const content = {
         title: "Como funciona a Abertura MEI",
         description: "Abra seu CNPJ MEI de forma rápida e segura em 3 passos simples.",
         steps: [
-            {
-                icon: FileText,
-                title: "Preencha seus dados",
-                text: "Informe seus dados pessoais e do negócio no nosso formulário inteligente e seguro. É rápido e intuitivo."
-            },
-            {
-                icon: CreditCard,
-                text: "Efetue o pagamento via pix ou cartão de credito com total segurança"
-            },
-            {
-                icon: Check,
-                text: "Nossa equipe processa seu pedido junto a receita federal e você recebe seu CNPJ em ate dois dias uteis"
-            }
+            { icon: FileText, title: "Preencha seus dados", text: "Informe seus dados pessoais e do negócio no nosso formulário inteligente e seguro. É rápido e intuitivo." },
+            { icon: CreditCard, title: "Realize o pagamento", text: "Efetue o pagamento via PIX ou cartão de crédito com total segurança." },
+            { icon: Check, title: "Receba o seu CNPJ", text: "Nossa equipe processa a sua solicitação junto à Receita Federal e você recebe o seu CNPJ em até dois dias úteis." }
         ]
     },
     me: {
         title: "Abertura de Microempresa (ME)",
         description: "Transforme seu negócio em uma ME com suporte contábil completo.",
         steps: [
-            {
-                icon: FileText,
-                title: "Envio de Documentos",
-                text: "Faça o upload dos documentos necessários (RG, CPF, Comprovante de Residência) através da nossa plataforma digital."
-            },
-            {
-                icon: FileText,
-                title: "Contrato Social",
-                text: "Nossos contadores especializados elaboram o Contrato Social personalizado para o seu modelo de negócio."
-            },
-            {
-                icon: Check,
-                title: "Registro Completo",
-                text: "Cuidamos de todo o processo na Junta Comercial, Receita Federal e Prefeitura. Você recebe a empresa pronta."
-            }
+            { icon: FileText, title: "Envio de Documentos", text: "Preencha o nosso formulário e envie os documentos necessários através da nossa plataforma digital." },
+            { icon: FileText, title: "Contrato Social", text: "Os nossos especialistas elaboram o Contrato Social personalizado para o seu modelo de negócio." },
+            { icon: Check, title: "Registro Completo", text: "Cuidamos de todo o processo na Junta Comercial, Receita Federal e Prefeitura Municipal. Você recebe a empresa pronta." }
         ]
     },
     regularize: {
         title: "Regularização de CNPJ",
         description: "Resolva pendências e evite o cancelamento do seu CNPJ MEI.",
         steps: [
-            {
-                icon: FileText,
-                title: "Análise de Pendências",
-                text: "Realizamos uma varredura completa no seu CNPJ para identificar todas as declarações (DASN) e impostos (DAS) em atraso."
-            },
-            {
-                icon: CreditCard,
-                title: "Parcelamento",
-                text: "Geramos os boletos atualizados ou realizamos o parcelamento da dívida em até 60x para facilitar o pagamento."
-            },
-            {
-                icon: Check,
-                title: "CNPJ Regular",
-                text: "Após o processamento, seu CNPJ volta à situação regular, evitando o cancelamento e permitindo a emissão de notas."
-            }
+            { icon: FileText, title: "Análise de Pendências", text: "Realizamos uma varredura completa no seu CNPJ para identificar todas as declarações (DASN) e impostos (DAS) em atraso." },
+            { icon: CreditCard, title: "Parcelamento", text: "Geramos os boletos atualizados ou realizamos o parcelamento da dívida em até 60x para facilitar o pagamento." },
+            { icon: Check, title: "CNPJ Regular", text: "Após o processamento, seu CNPJ volta à situação regular, evitando o cancelamento e permitindo a emissão de notas." }
         ]
     },
     consultancy: {
@@ -87,46 +53,58 @@ export const ProcessExplanationModal = ({ open, onOpenChange, type, onProceed }:
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md bg-white border-none shadow-2xl overflow-hidden">
-                <DialogHeader className="bg-brand-gold p-8 -mx-6 -mt-6 mb-6 relative overflow-hidden">
-                    {/* Decorative Elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-xl translate-y-1/2 -translate-x-1/2"></div>
+            <DialogContent className="sm:max-w-lg bg-brand-navy border-none shadow-2xl shadow-black/40 overflow-hidden p-0 gap-0 rounded-2xl">
+                {/* Header */}
+                <DialogHeader className="relative px-8 pt-8 pb-6">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-gold/[0.08] via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent" />
 
-                    <DialogTitle className="text-2xl font-bold text-brand-navy flex items-center gap-2 relative z-10">
-                        {data.title}
-                    </DialogTitle>
-                    <DialogDescription className="text-brand-navy/80 font-medium relative z-10">
-                        {data.description}
-                    </DialogDescription>
+                    <div className="relative z-10">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/15 mb-4">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold/70">Como funciona</span>
+                        </div>
+                        <DialogTitle className="font-display text-2xl font-extrabold text-white tracking-tight">
+                            {data.title}
+                        </DialogTitle>
+                        <DialogDescription className="text-white/40 text-sm mt-2 leading-relaxed">
+                            {data.description}
+                        </DialogDescription>
+                    </div>
                 </DialogHeader>
 
-                <div className="space-y-8 relative px-2">
-                    {/* Connecting Line */}
-                    <div className="absolute left-[27px] top-4 bottom-4 w-0.5 bg-slate-100 -z-10"></div>
+                {/* Steps */}
+                <div className="px-8 py-8 space-y-6 relative">
+                    {/* Connecting line */}
+                    <div className="absolute left-[3.25rem] top-12 bottom-12 w-px bg-gradient-to-b from-brand-gold/30 via-brand-gold/10 to-transparent pointer-events-none" />
 
-                    {data.steps.map((step, index) => (
-                        <div key={index} className="flex gap-5 items-start bg-white relative group">
-                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 border-2 border-brand-gold shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                <step.icon className="w-5 h-5 text-brand-navy" />
+                    {data.steps.map((step, index) => {
+                        const StepIcon = step.icon;
+                        return (
+                            <div key={index} className="flex gap-4 items-start relative group">
+                                <div className="w-10 h-10 rounded-xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center shrink-0 group-hover:bg-brand-gold/20 transition-colors duration-300 relative z-10">
+                                    <StepIcon className="w-5 h-5 text-brand-gold" />
+                                </div>
+                                <div className="pt-0.5 flex-1 min-w-0">
+                                    <h4 className="font-display text-sm font-extrabold text-white mb-1 tracking-tight">{step.title}</h4>
+                                    <p className="text-[13px] text-white/35 leading-relaxed">{step.text}</p>
+                                </div>
                             </div>
-                            <div className="space-y-1.5 pt-0.5">
-                                <h4 className="font-bold text-brand-navy text-base">{step.title}</h4>
-                                <p className="text-sm text-slate-500 leading-relaxed">{step.text}</p>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
-                <DialogFooter className="mt-8 pt-0">
+                {/* Footer */}
+                <div className="px-8 pb-8 pt-2">
                     <Button
                         onClick={onProceed}
-                        className="w-full h-14 bg-brand-navy hover:bg-brand-navy/90 text-white font-bold text-lg shadow-lg shadow-brand-navy/20 rounded-xl"
+                        className="w-full h-13 bg-brand-gold hover:bg-brand-gold/90 text-brand-navy font-bold text-sm shadow-lg shadow-brand-gold/20 rounded-xl group"
                     >
                         Continuar
-                        <ArrowRight className="ml-2 w-5 h-5" />
+                        <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </Button>
-                </DialogFooter>
+                    <p className="text-center text-white/20 text-xs mt-3">Você será redirecionado para os planos</p>
+                </div>
             </DialogContent>
         </Dialog>
     );

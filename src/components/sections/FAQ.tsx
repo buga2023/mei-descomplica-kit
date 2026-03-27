@@ -1,91 +1,127 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
-import { Lock, Shield, Award } from "lucide-react";
+import { Lock, Shield, Award, HelpCircle } from "lucide-react";
+
+const faqItems = [
+    {
+        question: "Preciso de contador sendo MEI?",
+        answer: "Não é obrigatório por lei, mas ter assessoria especializada garante que você não pague multas e aproveite todos os benefícios previdenciários corretamente."
+    },
+    {
+        question: "Quanto custa para abrir o MEI?",
+        answer: "O governo não cobra taxa de abertura. Nossos planos cobram pela assessoria, análise de dados, escolha correta do CNAE e suporte para emissão de notas."
+    },
+    {
+        question: "Em quanto tempo fica pronto?",
+        answer: "Geralmente em 24 a 48 horas úteis. Em muitos municípios, o CNPJ sai na hora, dependendo apenas da validação da prefeitura."
+    },
+    {
+        question: "Posso ter carteira assinada e ser MEI?",
+        answer: "Sim! Você pode manter seu emprego CLT e ter seu CNPJ MEI para atividades extras, sem problemas."
+    }
+];
+
+const trustItems = [
+    {
+        icon: Lock,
+        title: "Dados Seguros",
+        description: "Criptografia de ponta a ponta.",
+        color: "bg-emerald-500/[0.08]",
+        iconColor: "text-emerald-600",
+    },
+    {
+        icon: Shield,
+        title: "Garantia de Entrega",
+        description: "CNPJ entregue ou reembolso.",
+        color: "bg-blue-500/[0.08]",
+        iconColor: "text-blue-600",
+    },
+    {
+        icon: Award,
+        title: "5.000+ Clientes",
+        description: "Nota 4.9/5 de satisfação.",
+        color: "bg-brand-gold/[0.08]",
+        iconColor: "text-brand-gold",
+    },
+];
 
 export const FAQ = () => {
-    const faqItems = [
-        {
-            question: "Preciso de contador sendo MEI?",
-            answer: "Não é obrigatório por lei, mas ter assessoria especializada garante que você não pague multas e aproveite todos os benefícios previdenciários corretamente."
-        },
-        {
-            question: "Quanto custa para abrir o MEI?",
-            answer: "O governo não cobra taxa de abertura. Nossos planos cobram pela assessoria, análise de dados, escolha correta do CNAE e suporte para emissão de notas."
-        },
-        {
-            question: "Em quanto tempo fica pronto?",
-            answer: "Geralmente em 24 a 48 horas úteis. Em muitos municípios, o CNPJ sai na hora, dependendo apenas da validação da prefeitura."
-        },
-        {
-            question: "Posso ter carteira assinada e ser MEI?",
-            answer: "Sim! Você pode manter seu emprego CLT e ter seu CNPJ MEI para atividades extras, sem problemas."
-        }
-    ];
-
-    const fadeInUp = {
-        initial: { opacity: 0, y: 20 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.5 }
-    };
-
     return (
-        <section id="faq" className="py-section-y bg-slate-50 relative overflow-hidden">
-            {/* Decorative circle */}
-            <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full border border-brand-gold/10 pointer-events-none" />
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full border border-brand-navy/5 pointer-events-none" />
+        <section id="faq" className="py-section-y bg-slate-50/70 relative overflow-hidden">
+            {/* Background accents */}
+            <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-brand-gold/[0.02] blur-[80px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-brand-navy/[0.02] blur-[80px] pointer-events-none" />
 
-            <div className="container max-w-4xl relative z-10">
-                <div className="grid md:grid-cols-2 gap-12">
-                    <motion.div {...fadeInUp}>
-                        <h2 className="section-heading text-brand-navy mb-6">Dúvidas Frequentes</h2>
-                        <p className="text-brand-navy/70 mb-8 text-lg">
-                            Entenda tudo sobre o processo de abertura e regularização do seu MEI.
-                        </p>
+            <div className="container max-w-5xl relative z-10">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center mb-14"
+                >
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-navy/[0.04] border border-brand-navy/[0.08] mb-6">
+                        <HelpCircle className="w-3.5 h-3.5 text-brand-navy/40" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-brand-navy/45">Tire suas dúvidas</span>
+                    </div>
+                    <h2 className="section-heading text-brand-navy mb-4">Dúvidas Frequentes</h2>
+                    <p className="text-lg text-brand-navy/40 max-w-lg mx-auto">
+                        Tudo o que você precisa saber sobre a abertura do seu MEI.
+                    </p>
+                </motion.div>
 
-                        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
-                            <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
-                                    <Lock className="w-7 h-7 text-emerald-600" />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-brand-navy text-lg">Dados Seguros</h3>
-                                    <p className="text-slate-500">Seus dados são protegidos e criptografados.</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                                    <Shield className="w-7 h-7 text-primary" />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-brand-navy text-lg">Garantia de Entrega</h3>
-                                    <p className="text-slate-500">CNPJ entregue ou seu dinheiro de volta.</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
-                                    <Award className="w-7 h-7 text-brand-gold" />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-brand-navy text-lg">5.000+ Clientes</h3>
-                                    <p className="text-slate-500">Nota 4.9/5 de satisfação comprovada.</p>
-                                </div>
-                            </div>
-                        </div>
+                <div className="grid md:grid-cols-5 gap-8 lg:gap-12">
+                    {/* Left — Trust cards */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                        className="md:col-span-2 space-y-3"
+                    >
+                        {trustItems.map((item, i) => {
+                            const Icon = item.icon;
+                            return (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -15 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1, duration: 0.4 }}
+                                    className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-slate-200/60 hover:border-brand-gold/30 hover:shadow-md transition-all duration-300"
+                                >
+                                    <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center shrink-0`}>
+                                        <Icon className={`w-6 h-6 ${item.iconColor}`} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-display text-sm font-extrabold text-brand-navy leading-none">{item.title}</h3>
+                                        <p className="text-xs text-brand-navy/40 mt-1">{item.description}</p>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
 
-                    <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
-                        <Accordion type="single" collapsible className="w-full space-y-4">
+                    {/* Right — Accordion */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.15, duration: 0.5 }}
+                        className="md:col-span-3"
+                    >
+                        <Accordion type="single" collapsible className="w-full space-y-3">
                             {faqItems.map((item, index) => (
                                 <AccordionItem
                                     key={index}
                                     value={`item-${index}`}
-                                    className="bg-white border border-slate-100 rounded-2xl px-6 shadow-sm data-[state=open]:border-l-4 data-[state=open]:border-l-brand-gold transition-all"
+                                    className="bg-white border border-slate-200/60 rounded-2xl px-6 data-[state=open]:border-brand-gold/30 data-[state=open]:shadow-md data-[state=open]:shadow-brand-gold/[0.04] transition-all duration-300"
                                 >
-                                    <AccordionTrigger className="text-brand-navy font-bold hover:no-underline hover:text-brand-gold text-left">
+                                    <AccordionTrigger className="font-display text-brand-navy font-extrabold text-[15px] hover:no-underline hover:text-brand-gold text-left py-5 tracking-tight">
                                         {item.question}
                                     </AccordionTrigger>
-                                    <AccordionContent className="text-slate-600 text-base leading-relaxed">
+                                    <AccordionContent className="text-brand-navy/50 text-sm leading-relaxed pb-5">
                                         {item.answer}
                                     </AccordionContent>
                                 </AccordionItem>

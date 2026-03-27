@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "impeccable@impeccable": true,
+    "code-review@claude-plugins-official": true
+  }
+}

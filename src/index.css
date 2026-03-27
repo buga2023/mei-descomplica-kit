@@ -79,7 +79,7 @@
   }
 
   .section-heading {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight;
   }
 
   .section-subheading {

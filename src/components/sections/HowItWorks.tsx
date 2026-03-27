@@ -1,91 +1,119 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Check } from "lucide-react";
+import { ArrowRight, ClipboardList, CreditCard, FileCheck2, PartyPopper } from "lucide-react";
 
 const steps = [
     {
         id: "preenchimento",
         number: "01",
         title: "Preencha o Formulário",
-        desc: "Informe seus dados básicos em nosso formulário seguro. Leva menos de 2 minutos para completar.",
-        link: "/como-funciona/preenchimento"
+        desc: "Informe seus dados básicos em nosso formulário seguro. Leva menos de 2 minutos.",
+        link: "/como-funciona/preenchimento",
+        icon: ClipboardList,
     },
     {
         id: "analise",
         number: "02",
         title: "Efetue o Pagamento",
-        desc: "Realize o pagamento via pix ou cartão de crédito com total segurança.",
-        link: "/como-funciona/analise"
+        desc: "Realize o pagamento via PIX com total segurança e confirmação instantânea.",
+        link: "/como-funciona/analise",
+        icon: CreditCard,
     },
     {
         id: "recebimento",
         number: "03",
         title: "Receba seu CNPJ",
-        desc: "Nossa equipe processa seu pedido junto à Receita Federal e você recebe seu CNPJ em até dois dias úteis.",
-        link: "/como-funciona/recebimento"
+        desc: "Nossa equipe processa junto à Receita Federal. CNPJ em até 2 dias úteis.",
+        link: "/como-funciona/recebimento",
+        icon: FileCheck2,
     },
     {
         id: "beneficios",
         number: "04",
         title: "Aproveite os Benefícios",
-        desc: "Aproveite todos os benefícios exclusivos de ser MEI com a nossa assessoria especializada.",
-        link: "/como-funciona/beneficios"
+        desc: "Emita notas fiscais, contribua ao INSS e cresça com assessoria especializada.",
+        link: "/como-funciona/beneficios",
+        icon: PartyPopper,
     }
 ];
 
 export const HowItWorks = () => {
     return (
-        <section id="como-funciona" className="py-section-y bg-white">
-            <div className="container">
+        <section id="como-funciona" className="py-section-y bg-gradient-to-b from-white to-slate-50/80 relative overflow-hidden">
+            {/* Background accent */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-brand-gold/[0.03] rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="container relative z-10">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="text-center max-w-3xl mx-auto mb-16"
+                    className="text-center max-w-2xl mx-auto mb-16"
                 >
-                    <h2 className="section-heading text-brand-navy mb-3">
-                        Como Funciona a Abertura MEI
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-navy/[0.04] border border-brand-navy/[0.08] mb-6">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-brand-navy/50">Processo simplificado</span>
+                    </div>
+
+                    <h2 className="section-heading text-brand-navy mb-5">
+                        Como Funciona
                     </h2>
-                    <p className="text-brand-gold font-bold text-lg uppercase tracking-wider mb-4">
-                        Abertura de MEI Simplificado
+                    <p className="text-lg text-brand-navy/45 leading-relaxed">
+                        4 passos simples para formalizar seu negócio. Sem burocracia, sem complicação.
                     </p>
-                    <p className="section-subheading text-brand-navy/70">Simplificamos a burocracia para você focar no que importa: seu negócio.</p>
                 </motion.div>
 
-                <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                    {/* Connector line (desktop only) */}
-                    <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 border-t-2 border-dashed border-brand-gold/40 z-0" />
+                {/* Steps */}
+                <div className="relative">
+                    {/* Connector line (desktop) */}
+                    <div className="hidden lg:block absolute top-[3.5rem] left-[calc(12.5%+1.75rem)] right-[calc(12.5%+1.75rem)] z-0">
+                        <div className="w-full h-px bg-gradient-to-r from-brand-gold/40 via-brand-gold/20 to-brand-gold/40" />
+                    </div>
 
-                    {steps.map((step, i) => (
-                        <Link to={step.link} key={step.id} className="block h-full relative z-10">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1, duration: 0.5 }}
-                                whileHover={{ y: -10 }}
-                                className="h-full group rounded-3xl bg-white/80 backdrop-blur-sm border border-brand-gold/20 hover:border-brand-gold hover:shadow-2xl hover:shadow-brand-gold/20 transition-all duration-300 relative overflow-hidden flex flex-col"
-                            >
-                                {/* Gold accent bar */}
-                                <div className="h-1 w-full bg-gradient-to-r from-brand-gold to-brand-gold/50" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {steps.map((step, i) => {
+                            const Icon = step.icon;
+                            return (
+                                <Link to={step.link} key={step.id} className="block group">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 25 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: i * 0.1, duration: 0.45 }}
+                                        className="h-full relative"
+                                    >
+                                        <div className="h-full flex flex-col rounded-2xl bg-white border border-slate-200/70 hover:border-brand-gold/40 hover:shadow-xl hover:shadow-brand-gold/[0.06] transition-all duration-400 p-7">
+                                            {/* Number + Icon row */}
+                                            <div className="flex items-center justify-between mb-6">
+                                                <div className="w-14 h-14 rounded-2xl bg-brand-navy flex items-center justify-center shadow-lg shadow-brand-navy/15 relative z-10">
+                                                    <span className="text-brand-gold font-display font-extrabold text-lg">{step.number}</span>
+                                                </div>
+                                                <div className="w-10 h-10 rounded-xl bg-brand-gold/[0.06] flex items-center justify-center group-hover:bg-brand-gold/15 transition-colors duration-300">
+                                                    <Icon className="w-5 h-5 text-brand-navy/30 group-hover:text-brand-gold transition-colors duration-300" />
+                                                </div>
+                                            </div>
 
-                                <div className="p-8 flex flex-col flex-grow">
-                                    {/* Number badge */}
-                                    <div className="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold font-black text-xl flex items-center justify-center mb-6 shrink-0 shadow-lg shadow-brand-navy/20">
-                                        {step.number}
-                                    </div>
+                                            {/* Content */}
+                                            <h3 className="font-display text-[15px] font-extrabold text-brand-navy mb-2 leading-snug tracking-tight">
+                                                {step.title}
+                                            </h3>
+                                            <p className="text-[13px] text-brand-navy/40 leading-relaxed flex-1">
+                                                {step.desc}
+                                            </p>
 
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <Check className="w-5 h-5 text-brand-gold shrink-0" />
-                                        <h3 className="text-lg font-bold text-brand-navy leading-tight">{step.title}</h3>
-                                    </div>
-
-                                    <p className="text-brand-navy/70 leading-relaxed text-base flex-grow">{step.desc}</p>
-                                </div>
-                            </motion.div>
-                        </Link>
-                    ))}
+                                            {/* CTA */}
+                                            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-brand-navy/25 group-hover:text-brand-gold transition-colors duration-300">
+                                                <span className="text-xs font-bold uppercase tracking-wider">Ver detalhes</span>
+                                                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </Link>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </section>

@@ -3,8 +3,9 @@ import { benefitsData } from "../data/benefitsData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { whatsappLink } from "@/config";
+import DOMPurify from "dompurify";
 
 const BenefitDetail = () => {
     const { slug } = useParams();
@@ -25,6 +26,7 @@ const BenefitDetail = () => {
     }
 
     const Icon = benefit.icon;
+    const sanitizedContent = useMemo(() => DOMPurify.sanitize(benefit.content), [benefit.content]);
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans selection:bg-brand-gold/30">
@@ -73,7 +75,7 @@ const BenefitDetail = () => {
                 prose-headings:text-brand-navy prose-headings:font-bold
                 prose-p:text-slate-600 prose-p:leading-relaxed
                 prose-strong:text-brand-navy prose-strong:font-bold"
-                                dangerouslySetInnerHTML={{ __html: benefit.content }}
+                                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
                             />
                         </div>
                     </div>
